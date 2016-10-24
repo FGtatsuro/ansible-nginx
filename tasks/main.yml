@@ -1,4 +1,39 @@
 ---
 # tasks file for nginx
-- name: Run specified tasks on current platform 
+- name: Run specified tasks on current platform
   include: "{{ ansible_os_family }}.yml"
+
+- block:
+  - name: Copy root config file of Nginx from nginx_root_config_src to nginx_root_config_remote
+    copy:
+      src: "{{ nginx_root_config_src }}"
+      dest: "{{ nginx_root_config_remote }}"
+      owner: "{{ nginx_config_owner }}"
+      group: "{{ nginx_config_group }}"
+  - name: Ensure root config file of Nginx is readable
+    file:
+      path: "{{ nginx_root_config_remote }}"
+      mode: 'a+r'
+  when: nginx_root_config_src is defined
+  become: yes
+
+- block:
+  - name: Ensure nginx_extra_config_remote_dir exists
+    file:
+      path: "{{ nginx_extra_config_remote_dir }}"
+      owner: "{{ nginx_config_owner }}"
+      group: "{{ nginx_config_group }}"
+      state: 'directory'
+  - name: Copy extra config files of Nginx from nginx_extra_config_src_dir to nginx_extra_config_remote_dir
+    copy:
+      src: "{{ nginx_extra_config_src_dir }}"
+      dest: "{{ nginx_extra_config_remote_dir }}"
+      owner: "{{ nginx_config_owner }}"
+      group: "{{ nginx_config_group }}"
+  - name: Ensure extra config files of Nginx are readable
+    file:
+      path: "{{ nginx_extra_config_remote_dir }}"
+      recurse: yes
+      mode: 'a+r'
+  when: nginx_extra_config_src_dir is defined
+  become: yes
