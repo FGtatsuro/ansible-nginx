@@ -23,6 +23,7 @@ matrix:
         - TARGET=localhost
         # Workaround for OSX.
         - PYTHONPATH="/Library/Python/2.7/site-packages:$PYTHONPATH"
+        - EXTRA_VARS="nginx_root_config_src='./tests/nginx.conf' nginx_root_config_remote='/Users/travis/nginx/nginx.conf' nginx_extra_config_src_dir='./tests/conf.d' nginx_extra_config_remote_dir='/Users/travis/nginx/conf.d' nginx_config_owner='travis' nginx_config_group='staff'"
     - os: linux
       dist: trusty
       language: python
@@ -40,6 +41,7 @@ matrix:
       env:
         - IMAGE_NAME=fgtatsuro/infra-bridgehead:debian-jessie
         - TARGET=container
+        - EXTRA_VARS="nginx_root_config_src='./tests/nginx.conf' nginx_extra_config_src_dir='./tests/conf.d'"
     - os: linux
       dist: trusty
       language: python
@@ -57,6 +59,7 @@ matrix:
       env:
         - TARGET=container
         - IMAGE_NAME=fgtatsuro/infra-bridgehead:alpine-3.3
+        - EXTRA_VARS="nginx_root_config_src='./tests/nginx.conf' nginx_extra_config_src_dir='./tests/conf.d'"
 
 # This role needs sudo, thus we can't use the new container infrastructure
 # sudo: false
