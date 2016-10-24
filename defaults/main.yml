@@ -1,2 +1,6 @@
 ---
 # defaults file for nginx
+nginx_root_config_remote: '/etc/nginx/nginx.conf'
+nginx_extra_config_remote_dir: '/etc/nginx/conf.d'
+nginx_config_owner: 'root'
+nginx_config_group: 'root'
