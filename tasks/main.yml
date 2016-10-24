@@ -4,6 +4,12 @@
   include: "{{ ansible_os_family }}.yml"
 
 - block:
+  - name: Ensure parent directory of nginx_root_config_remote exists
+    file:
+      path: "{{ nginx_root_config_remote | dirname }}"
+      owner: "{{ nginx_config_owner }}"
+      group: "{{ nginx_config_group }}"
+      state: 'directory'
   - name: Copy root config file of Nginx from nginx_root_config_src to nginx_root_config_remote
     copy:
       src: "{{ nginx_root_config_src }}"
