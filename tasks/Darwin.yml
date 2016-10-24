@@ -1,2 +1,6 @@
 ---
 # tasks file for nginx(On OSX)
+- name: Install Nginx with Homebrew
+  homebrew:
+    name: 'nginx'
+    update_homebrew: yes

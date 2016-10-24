@@ -1,2 +1,12 @@
 ---
 # tasks file for nginx(On Alpine Linux)
+- name: Install Nginx with APK
+  apk: name=nginx update_cache=yes
+  become: yes
+- name: Create a directory for PID file
+  file:
+    path: '/run/nginx'
+    owner: 'nginx'
+    group: 'nginx'
+    state: 'directory'
+  become: yes
