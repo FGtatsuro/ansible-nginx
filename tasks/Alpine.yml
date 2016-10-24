@@ -1,2 +1,5 @@
 ---
 # tasks file for nginx(On Alpine Linux)
+- name: Install Nginx with APK
+  apk: name=nginx update_cache=yes
+  become: yes
